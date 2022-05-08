@@ -6,7 +6,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Net;
 
-namespace TestLib.Worker.Updater
+namespace TesterLib.Worker.Updater
 {
 	internal static class Program
 	{
