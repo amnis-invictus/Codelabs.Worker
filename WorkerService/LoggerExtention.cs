@@ -1,4 +1,5 @@
 ﻿using NLog;
+using TesterLib;
 
 namespace TestLib.Worker
 {

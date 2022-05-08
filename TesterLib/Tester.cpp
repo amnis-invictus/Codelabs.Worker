@@ -155,9 +155,9 @@ namespace Internal
 		return true;
 	}
 
-	TestLib::WaitingResult Tester::Wait()
+	TesterLib::WaitingResult Tester::Wait()
 	{
-		TestLib::WaitingResult result;
+		TesterLib::WaitingResult result;
 
 		DWORD timeOut = limits.realTimeLimitMs - (GetTickCount() - startTime);
 
@@ -165,12 +165,12 @@ namespace Internal
 		switch (waitCode)
 		{
 		case WAIT_TIMEOUT:
-			result = TestLib::WaitingResult::Timeout;
+			result = TesterLib::WaitingResult::Timeout;
 
 			if (!TerminateProcessS(startupHandles.process, -1))
 			{
 				Internal::logger->Error(L"Failed to TerminateProcess. workDirectory = '%s', program = '%s'", workDirectory, program);
-				result = TestLib::WaitingResult::Fail;
+				result = TesterLib::WaitingResult::Fail;
 			}
 
 			SafeCloseHandle(&startupHandles.thread);
@@ -185,7 +185,7 @@ namespace Internal
 			Internal::logger->Error(L"Waiting program timeout expired. workDirectory = '%s', program = '%s'", workDirectory, program);
 			break;
 		case WAIT_FAILED:
-			result = TestLib::WaitingResult::Fail;
+			result = TesterLib::WaitingResult::Fail;
 			
 			if (!TerminateProcessS(startupHandles.process, -1))
 				Internal::logger->Error(L"Failed to TerminateProcess. workDirectory = '%s', program = '%s'", workDirectory, program);
@@ -204,7 +204,7 @@ namespace Internal
 		case WAIT_OBJECT_0:
 			GetExitCodeProcess(startupHandles.process, &usedResources.ProcessExitCode);
 
-			result = TestLib::WaitingResult::Ok;
+			result = TesterLib::WaitingResult::Ok;
 
 			Internal::logger->Info(L"Program waited successfully. workDirectory = '%s', program = '%s'", workDirectory, program);
 			break;

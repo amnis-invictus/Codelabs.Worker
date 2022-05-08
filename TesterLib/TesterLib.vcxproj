@@ -22,7 +22,7 @@
     <ProjectGuid>{75A0152A-D5BD-4EF3-97E5-43AC125D866D}</ProjectGuid>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <Keyword>ManagedCProj</Keyword>
-    <RootNamespace>TestLibTester</RootNamespace>
+    <RootNamespace>TesterLib</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ProjectName>TesterLib</ProjectName>
   </PropertyGroup>

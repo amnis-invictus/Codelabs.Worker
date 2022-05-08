@@ -15,7 +15,7 @@ using uint32 = unsigned long int;
 
 #define nameof(name) #name
 
-namespace TestLib
+namespace TesterLib
 {
 	public enum class IOHandleType
 	{
@@ -193,7 +193,7 @@ namespace Internal
 			limits.memoryLimitKb = _memoryKb;
 		}
 
-		bool RedirectIOHandleToFile(TestLib::IOHandleType _handleType, const wchar_t * _fileName)
+		bool RedirectIOHandleToFile(TesterLib::IOHandleType _handleType, const wchar_t * _fileName)
 		{
 			if (_fileName == nullptr)
 			{
@@ -212,12 +212,12 @@ namespace Internal
 
 			switch (_handleType)
 			{
-			case TestLib::IOHandleType::Input:
+			case TesterLib::IOHandleType::Input:
 				rwMode = GENERIC_READ;
 				openMode = OPEN_EXISTING;
 				break;
-			case TestLib::IOHandleType::Output:
-			case TestLib::IOHandleType::Error:
+			case TesterLib::IOHandleType::Output:
+			case TesterLib::IOHandleType::Error:
 				rwMode = GENERIC_WRITE;
 				openMode = CREATE_ALWAYS;
 				break;
@@ -244,15 +244,15 @@ namespace Internal
 
 			switch (_handleType)
 			{
-			case TestLib::IOHandleType::Input:
+			case TesterLib::IOHandleType::Input:
 				SafeCloseHandle(&IoHandles.input);
 				IoHandles.input = h;
 				break;
-			case TestLib::IOHandleType::Output:
+			case TesterLib::IOHandleType::Output:
 				SafeCloseHandle(&IoHandles.output);
 				IoHandles.output = h;
 				break;
-			case TestLib::IOHandleType::Error:
+			case TesterLib::IOHandleType::Error:
 				SafeCloseHandle(&IoHandles.error);
 				IoHandles.error = h;
 				break;
@@ -265,7 +265,7 @@ namespace Internal
 			return true;
 		}
 
-		bool RedirectIOHandleToHandle(TestLib::IOHandleType _handleType, void * _handle, bool _duplicate)
+		bool RedirectIOHandleToHandle(TesterLib::IOHandleType _handleType, void * _handle, bool _duplicate)
 		{
 			if (_handle == nullptr)
 			{
@@ -278,15 +278,15 @@ namespace Internal
 
 			switch (_handleType)
 			{
-			case TestLib::IOHandleType::Input:
+			case TesterLib::IOHandleType::Input:
 				SafeCloseHandle(&IoHandles.input);
 				h = &IoHandles.input;
 				break;
-			case TestLib::IOHandleType::Output:
+			case TesterLib::IOHandleType::Output:
 				SafeCloseHandle(&IoHandles.output);
 				h = &IoHandles.output;
 				break;
-			case TestLib::IOHandleType::Error:
+			case TesterLib::IOHandleType::Error:
 				SafeCloseHandle(&IoHandles.error);
 				h = &IoHandles.error;
 				break;
@@ -316,15 +316,15 @@ namespace Internal
 			return true;
 		}
 
-		void * GetIORedirectedHandle(TestLib::IOHandleType _handleType)
+		void * GetIORedirectedHandle(TesterLib::IOHandleType _handleType)
 		{
 			switch (_handleType)
 			{
-			case TestLib::IOHandleType::Input:
+			case TesterLib::IOHandleType::Input:
 				return IoHandles.input;
-			case TestLib::IOHandleType::Output:
+			case TesterLib::IOHandleType::Output:
 				return IoHandles.output;
-			case TestLib::IOHandleType::Error:
+			case TesterLib::IOHandleType::Error:
 				return IoHandles.error;
 			default:
 				Internal::logger->Error(L"%hhd is incorrect _handleType", (uint8)_handleType);
@@ -333,7 +333,7 @@ namespace Internal
 		}
 
 		bool Run(bool useRestrictions = false);
-		TestLib::WaitingResult Wait();
+		TesterLib::WaitingResult Wait();
 		void CloseIORedirectionHandles();
 
 		uint32 GetRunResult()
@@ -345,7 +345,7 @@ namespace Internal
 			return usedResources.ProcessExitCode;
 		}
 
-		TestLib::UsedResources GetUsedResources()
+		TesterLib::UsedResources GetUsedResources()
 		{
 			return usedResources;
 		}
@@ -537,7 +537,7 @@ namespace Internal
 		wchar_t * workDirectory;
 
 		DWORD startTime;
-		TestLib::UsedResources usedResources;
+		TesterLib::UsedResources usedResources;
 
 		struct {
 			wchar_t * userName;

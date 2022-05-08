@@ -8,7 +8,7 @@ using namespace System;
 using namespace System::Runtime::InteropServices;
 using namespace System::Runtime::CompilerServices;
 
-namespace TestLib
+namespace TesterLib
 {
 	class NativeLogCallbackHandler
 	{

@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using TesterLib;
 using TestLib.Worker.ClientApi;
 using TestLib.Worker.ClientApi.Models;
 
