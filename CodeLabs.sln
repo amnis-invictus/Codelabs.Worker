@@ -2,11 +2,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32228.343
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestLib.Tester", "TestLib.Tester\TestLib.Tester.vcxproj", "{75A0152A-D5BD-4EF3-97E5-43AC125D866D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TesterLib", "TesterLib\TesterLib.vcxproj", "{75A0152A-D5BD-4EF3-97E5-43AC125D866D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestLib.Worker.Updater", "TestLib.Worker.Updater\TestLib.Worker.Updater.csproj", "{80A1A18B-5CC4-4490-A93D-DB66343EDDB8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkerUpdater", "WorkerUpdater\WorkerUpdater.csproj", "{80A1A18B-5CC4-4490-A93D-DB66343EDDB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestLib.WorkerService", "TestLib.WorkerService\TestLib.WorkerService.csproj", "{D58DDEAB-B2DE-408D-A85C-59EF26C84E50}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkerService", "WorkerService\WorkerService.csproj", "{D58DDEAB-B2DE-408D-A85C-59EF26C84E50}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

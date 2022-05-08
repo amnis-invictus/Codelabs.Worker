@@ -155,15 +155,15 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TestLib.Tester\TestLib.Tester.vcxproj">
-      <Project>{75a0152a-d5bd-4ef3-97e5-43ac125d866d}</Project>
-      <Name>TestLib.Tester</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="ServiceProcessInstaller.resx">
       <DependentUpon>ServiceProcessInstaller.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TesterLib\TesterLib.vcxproj">
+      <Project>{75a0152a-d5bd-4ef3-97e5-43ac125d866d}</Project>
+      <Name>TesterLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
