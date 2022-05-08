@@ -8,10 +8,10 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 using TesterLib;
-using TestLib.Worker.ClientApi;
-using TestLib.Worker.ClientApi.Models;
+using Worker.ClientApi;
+using Worker.ClientApi.Models;
 
-namespace TestLib.Worker
+namespace Worker
 {
 	public static class StringConvertionExtension
 	{
@@ -167,7 +167,7 @@ namespace TestLib.Worker
 							Directory.GetCurrentDirectory(),
 							AppDomain.CurrentDomain.FriendlyName,
 						};
-						Process.Start("TestLib.Worker.Updater.exe", string.Join(" ", args));
+						Process.Start("Worker.Updater.exe", string.Join(" ", args));
 
 						return CheckUpdateStatus.Restart;
 					}

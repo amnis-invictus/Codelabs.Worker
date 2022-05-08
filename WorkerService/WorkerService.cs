@@ -7,9 +7,9 @@ using System.Linq;
 using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
-using TestLib.Worker;
+using Worker;
 
-namespace TestLib.WorkerService
+namespace WorkerService
 {
 	public partial class WorkerService : ServiceBase
 	{

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using NLog;
-using TestLib.Worker.ClientApi;
-using TestLib.Worker.ClientApi.Models;
+using Worker.ClientApi;
+using Worker.ClientApi.Models;
 
-namespace TestLib.Worker
+namespace Worker
 {
 	internal class WorkerTaskManager
 	{

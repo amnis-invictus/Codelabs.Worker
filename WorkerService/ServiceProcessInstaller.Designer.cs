@@ -1,4 +1,4 @@
-﻿namespace TestLib.WorkerService
+﻿namespace WorkerService
 {
 	partial class ServiceProcessInstaller
 	{
@@ -40,9 +40,9 @@
 			// TestLibServiceInstaller
 			// 
 			this.TestLibServiceInstaller.DelayedAutoStart = true;
-			this.TestLibServiceInstaller.Description = "TestLib Worker Service";
-			this.TestLibServiceInstaller.DisplayName = "TestLib.Worker";
-			this.TestLibServiceInstaller.ServiceName = "TestLib.WorkerService";
+			this.TestLibServiceInstaller.Description = "CodeLabs Worker Service";
+			this.TestLibServiceInstaller.DisplayName = "CodeLabs Worker";
+			this.TestLibServiceInstaller.ServiceName = "CodeLabs.WorkerService";
 			this.TestLibServiceInstaller.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
 			// 
 			// ServiceProcessInstaller

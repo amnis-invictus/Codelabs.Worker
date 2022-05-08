@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NLog;
 
-namespace TestLib.Worker
+namespace Worker
 {
 	class FileProvider
 	{

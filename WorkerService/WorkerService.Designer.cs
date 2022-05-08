@@ -1,4 +1,4 @@
-﻿namespace TestLib.WorkerService
+﻿namespace WorkerService
 {
 	partial class WorkerService
 	{
@@ -29,9 +29,9 @@
 		private void InitializeComponent()
 		{
 			// 
-			// WorkerService
+			// CodeLabs.WorkerService
 			// 
-			this.ServiceName = "TestLib.WorkerService";
+			this.ServiceName = "CodeLabs.WorkerService";
 
 		}
 

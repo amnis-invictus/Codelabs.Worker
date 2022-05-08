@@ -7,10 +7,10 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
-using TestLib.Worker.ClientApi.Models;
-using TestLib.WorkerService;
+using Worker.ClientApi.Models;
+using WorkerService;
 
-namespace TestLib.Worker.ClientApi
+namespace Worker.ClientApi
 {
 	internal class HttpCodelabsApiClient : IApiClient
 	{

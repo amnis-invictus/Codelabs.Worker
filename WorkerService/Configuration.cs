@@ -8,7 +8,7 @@ using System.Text;
 using System.Collections.Specialized;
 using System.Diagnostics;
 
-namespace TestLib.Worker
+namespace Worker
 {
 	internal class Configuration
 	{
@@ -25,7 +25,7 @@ namespace TestLib.Worker
 		{
 			Update = new UpdateConfiguration();
 
-			WorkerName = config.Get("worker_name") ?? "TestLib.Worker";
+			WorkerName = config.Get("worker_name") ?? "Worker";
 
 			TestingWorkDirectory = config.Get("workarea") ?? ".\\workarea\\";
 

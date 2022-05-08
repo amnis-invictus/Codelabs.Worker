@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TestLib.WorkerService
+namespace WorkerService
 {
 	internal class TimeOutHelper
 	{

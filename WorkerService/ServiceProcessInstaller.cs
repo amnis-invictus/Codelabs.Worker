@@ -6,7 +6,7 @@ using System.Configuration.Install;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TestLib.WorkerService
+namespace WorkerService
 {
 	[RunInstaller(true)]
 	public partial class ServiceProcessInstaller : System.Configuration.Install.Installer

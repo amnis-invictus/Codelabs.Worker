@@ -3,9 +3,9 @@ using System;
 using System.Configuration.Install;
 using System.Reflection;
 using System.ServiceProcess;
-using TestLib.Worker;
+using Worker;
 
-namespace TestLib.WorkerService
+namespace WorkerService
 {
 	internal static class Program
 	{

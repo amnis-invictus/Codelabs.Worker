@@ -1,4 +1,4 @@
-﻿namespace TestLib.Worker
+﻿namespace Worker
 {
     public enum WorkerResult : byte
     {

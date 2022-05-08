@@ -1,7 +1,7 @@
 ﻿using NLog;
 using TesterLib;
 
-namespace TestLib.Worker
+namespace Worker
 {
 	internal static class LoggerExtention
 	{

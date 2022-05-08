@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace TestLib.Worker.ClientApi.Models
+namespace Worker.ClientApi.Models
 {
 	internal enum ApiType : byte
 	{

@@ -5,7 +5,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using NLog;
 
-namespace TestLib.Worker
+namespace Worker
 {
 	internal class CompilerManager
 	{

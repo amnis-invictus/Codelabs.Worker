@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using TestLib.Worker.ClientApi.Models;
+using Worker.ClientApi.Models;
 
-namespace TestLib.Worker.ClientApi
+namespace Worker.ClientApi
 {
 	interface IApiClient
 	{

@@ -1,4 +1,4 @@
-﻿namespace TestLib.Worker.ClientApi
+﻿namespace Worker.ClientApi
 {
 	internal enum UpdateWorkerStatus
 	{

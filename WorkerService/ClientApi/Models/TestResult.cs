@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using TesterLib;
 
-namespace TestLib.Worker.ClientApi.Models
+namespace Worker.ClientApi.Models
 {
 	internal class TestResult
 	{

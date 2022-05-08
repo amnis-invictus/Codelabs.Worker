@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace TestLib.Worker
+namespace Worker
 {
 	internal class ProblemCache
 	{

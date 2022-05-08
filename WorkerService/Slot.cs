@@ -2,9 +2,9 @@
 using System;
 using System.Linq;
 using System.Threading;
-using TestLib.Worker.ClientApi;
+using Worker.ClientApi;
 
-namespace TestLib.Worker
+namespace Worker
 {
 	internal class Slot
 	{

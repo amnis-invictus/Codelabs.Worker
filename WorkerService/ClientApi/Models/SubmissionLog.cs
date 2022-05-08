@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace TestLib.Worker.ClientApi.Models
+namespace Worker.ClientApi.Models
 {
     public enum SubmissionLogType : byte
     {
