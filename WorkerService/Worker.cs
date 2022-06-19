@@ -1,4 +1,4 @@
-﻿using NLog;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -229,7 +229,7 @@ namespace Worker
 		{
 			string workdir = new DirectoryInfo(Path.Combine(Application.Get().Configuration.TestingWorkDirectory, Guid.NewGuid().ToString())).FullName;
 			Directory.CreateDirectory(workdir);
-			logger.Info("Slot {0} starting testing at {1}", slotNum, workdir);
+			logger.Info("Slot {0} starting testing submission {1} at {2}", slotNum, submission.Id, workdir);
 
 			Compiler checkerCompiler = Application.Get().Compilers.GetCompiler(problem.CheckerCompilerId);
 			Compiler solutionCompiler = Application.Get().Compilers.GetCompiler(submission.CompilerId);
