@@ -514,7 +514,7 @@ namespace Internal
 		{
 			HANDLE hToken;
 
-			BOOL res = LogonUserW(userInfo.userName, userInfo.domain, userInfo.domain,
+			BOOL res = LogonUserW(userInfo.userName, userInfo.domain, userInfo.password,
 				LOGON32_LOGON_INTERACTIVE, LOGON32_PROVIDER_DEFAULT, &hToken);
 
 			if (res == 0)
