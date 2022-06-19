@@ -120,11 +120,6 @@ namespace Internal
 
 		~Tester()
 		{
-			programSet = false;
-			realTimeLimitSet = false;
-			memoryLimitSet = false;
-			workDirSet = false;
-
 			SafeCloseHandle(&IoHandles.input);
 			SafeCloseHandle(&IoHandles.output);
 			//SafeCloseHandle(&IoHandles.error);
@@ -147,50 +142,72 @@ namespace Internal
 			usedResources.ProcessExitCode = 0;
 			usedResources.RealTimeUsageMS = 0;
 
-			//free(program);
-			//free(args);
-			//free(workDirectory);
+			if (programSet)
+			{
+				free(program);
+				free(args);
 
-			if (userInfo.password != nullptr)
+				programSet = false;
+			}
+
+			if (workDirSet)
+			{
+				free(workDirectory);
+
+				workDirSet = false;
+			}
+
+			if (userInfo.useLogon)
+			{
+				free(userInfo.userName);
+				free(userInfo.domain);
+
 				SecureZeroMemory(userInfo.password, sizeof(wchar_t) * wcslen(userInfo.password));
+				free(userInfo.password);
+
+				userInfo.useLogon = false;
+			}
+
+			realTimeLimitSet = false;
+			memoryLimitSet = false;
 		}
 
 		void SetProgram(const wchar_t * _program, const wchar_t * _args)
 		{
-			programSet = true;
-
 			program = _wcsdup(_program);
 			args = _wcsdup(_args);
+
+			programSet = true;
 		}
 
 		void SetUser(const wchar_t * _userName, const wchar_t * _domain, const wchar_t * _password)
 		{
-			userInfo.useLogon = true;
-
 			userInfo.userName = _wcsdup(_userName);
 			userInfo.domain = _wcsdup(_domain);
 			userInfo.password = _wcsdup(_password);
+		
+			userInfo.useLogon = true;
 		}
 
 		void SetWorkDirectory(const wchar_t * _dir)
 		{
-			workDirSet = true;
-
 			workDirectory = _wcsdup(_dir);
+		
+			workDirSet = true;
 		}
 
 		void SetRealTimeLimit(uint32 _timeMs)
 		{
-			realTimeLimitSet = true;
-
 			limits.realTimeLimitMs = _timeMs;
+
+			realTimeLimitSet = true;
 		}
 
 		void SetMemoryLimit(uint32 _memoryKb)
 		{
-			memoryLimitSet = true;
-
 			limits.memoryLimitKb = _memoryKb;
+
+			memoryLimitSet = true;
 		}
 
 		bool RedirectIOHandleToFile(TesterLib::IOHandleType _handleType, const wchar_t * _fileName)
