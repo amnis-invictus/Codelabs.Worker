@@ -40,7 +40,7 @@ namespace Worker
 			{
 				SaveFile(test.Input);
 
-				if (test.Answer.Content != null)
+				if (test.Answer != null && test.Answer.Content != null)
 				{
 					SaveFile(test.Answer);
 				}
