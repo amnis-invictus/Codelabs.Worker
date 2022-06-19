@@ -78,7 +78,7 @@ namespace Internal
 			wchar_t env_var_num_of_proc[buffer_size];
 
 			if (GetEnvironmentVariableW(L"NUMBER_OF_PROCESSORS",
-				env_var_num_of_proc, sizeof(wchar_t) * buffer_size) == 0
+				env_var_num_of_proc, buffer_size) == 0
 				|| GetLastError() == ERROR_ENVVAR_NOT_FOUND)
 				processor_count = 1;
 			else
