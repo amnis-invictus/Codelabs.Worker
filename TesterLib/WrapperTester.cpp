@@ -124,40 +124,26 @@ namespace TesterLib
 
 		void SetProgram(String ^ program, String ^ args)
 		{
-			using namespace Runtime::InteropServices;
+			pin_ptr<const wchar_t> program_ptr = PtrToStringChars(program);
+			pin_ptr<const wchar_t> args_ptr = PtrToStringChars(args);
 
-			const wchar_t* program_native = (const wchar_t*)(Marshal::StringToHGlobalUni(program)).ToPointer();
-			const wchar_t* args_native = (const wchar_t*)(Marshal::StringToHGlobalUni(args)).ToPointer();
-
-			tester->SetProgram(program_native, args_native);
-
-			Marshal::FreeHGlobal(IntPtr((void*)program_native));
-			Marshal::FreeHGlobal(IntPtr((void*)args_native));
+			tester->SetProgram(program_ptr, args_ptr);
 		}
 
 		void SetUser(String ^ userName, String ^ domain, String ^ password)
 		{
-			using namespace Runtime::InteropServices;
+			pin_ptr<const wchar_t> userName_ptr = PtrToStringChars(userName);
+			pin_ptr<const wchar_t> domain_ptr = PtrToStringChars(domain);
+			pin_ptr<const wchar_t> password_ptr = PtrToStringChars(password);
 
-			const wchar_t* userName_native = (const wchar_t*)(Marshal::StringToHGlobalUni(userName)).ToPointer();
-			const wchar_t* domain_native = (const wchar_t*)(Marshal::StringToHGlobalUni(domain)).ToPointer();
-			const wchar_t* password_native = (const wchar_t*)(Marshal::StringToHGlobalUni(password)).ToPointer();
-
-			tester->SetUser(userName_native, domain_native, password_native);
-
-			Marshal::FreeHGlobal(IntPtr((void*)userName_native));
-			Marshal::FreeHGlobal(IntPtr((void*)domain_native));
-			Marshal::FreeHGlobal(IntPtr((void*)password_native));
+			tester->SetUser(userName_ptr, domain_ptr, password_ptr);
 		}
 
 		void SetWorkDirectory(String ^ directory)
 		{
-			using namespace Runtime::InteropServices;
+			pin_ptr<const wchar_t> directory_ptr = PtrToStringChars(directory);
 
-			const wchar_t* directory_native = (const wchar_t*)(Marshal::StringToHGlobalUni(directory)).ToPointer();
-			tester->SetWorkDirectory(directory_native);
-
-			Marshal::FreeHGlobal(IntPtr((void*)directory_native));
+			tester->SetWorkDirectory(directory_ptr);
 		}
 
 		void SetRealTimeLimit(UInt32 timeMS)
