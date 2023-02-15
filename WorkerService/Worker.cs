@@ -127,7 +127,7 @@ namespace Worker
 				string program = compiler.Commands[i].Program.ReplaceByDictionary(re, replacement);
 				string args = compiler.Commands[i].Arguments.ReplaceByDictionary(re, replacement);
 
-				if (isChecker)
+				if (isChecker && compiler.Commands[i].CheckerArguments != null)
 				{
 					args = $"{args} {compiler.Commands[i].CheckerArguments.ReplaceByDictionary(re, replacement)}";
 				}
@@ -405,8 +405,12 @@ namespace Worker
 						reportFilePath: reportFileFullPath);
 
 					string program = checkerCompiler.RunCommand.Program.ReplaceByDictionary(re, replacement);
-					string args = $"{checkerCompiler.RunCommand.Arguments} {checkerCompiler.RunCommand.CheckerArguments}".
-						ReplaceByDictionary(re, replacement);
+					string args = checkerCompiler.RunCommand.Arguments.ReplaceByDictionary(re, replacement);
+
+                    if (checkerCompiler.RunCommand.CheckerArguments != null)
+                    {
+                        args = $"{args} {checkerCompiler.RunCommand.CheckerArguments.ReplaceByDictionary(re, replacement)}";
+                    }
 
 					tester.SetProgram(program, $"\"{program}\" {args}");
 
