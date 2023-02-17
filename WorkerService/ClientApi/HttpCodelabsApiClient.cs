@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using NLog;
 using System;
 using System.Collections.Generic;
@@ -128,61 +129,42 @@ namespace Worker.ClientApi
 			string jsonProblem = client.GetStringAsync(endpoint).Result;
 
 			logger.Debug("Download problem response length: {0}", jsonProblem.Length);
+			Problem problem = JsonConvert.DeserializeObject<Problem>(jsonProblem);
 
-			JToken parsedProblem = JToken.Parse(jsonProblem);
-
-			Test[] tests = new Test[parsedProblem["tests"].Count()];
-			for (int i = 0; i < parsedProblem["tests"].Count(); i++)
+			for (int i = 0; i < problem.Tests.Count(); i++)
 			{
-				Test t = new Test();
-
-				t.Id = (UInt64)parsedProblem["tests"][i]["id"];
-				t.Num = (string)parsedProblem["tests"][i]["num"];
-				t.Input = downloadFile(
-					(string)parsedProblem["tests"][i]["input_url"]
-				);
-
-				if (t.Input is null)
+				problem.Tests[i].Input = downloadFile(problem.Tests[i].InputUrl);
+				if (problem.Tests[i].Input is null)
 				{
 					return null;
 				}
 				else
 				{
-					Application.Get().FileProvider.SaveFile(t.Input);
+					problem.Tests[i].Input.Save();
 				}
 
-				if (!(parsedProblem["tests"][i]["answer_url"] is null))
+				if (!(problem.Tests[i].AnswerUrl is null))
 				{
-					t.Answer = downloadFile(
-						(string)parsedProblem["tests"][i]["answer_url"]
-					);
+                    problem.Tests[i].Answer = downloadFile(problem.Tests[i].AnswerUrl);
 
-					if (t.Answer is null)
-					{
-						return null;
-					}
-					else
-					{
-						Application.Get().FileProvider.SaveFile(t.Answer);
-					}
-				}
-
-				tests[i] = t;
+                    if (problem.Tests[i].Answer is null)
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        problem.Tests[i].Answer.Save();
+                    }
+                }
 			}
 
-			ProblemFile checker = downloadFile((string)parsedProblem["checker_source_url"]);
-			if (checker is null)
+			problem.Checker = downloadFile(problem.CheckerSourceUrl);
+			if (problem.Checker is null)
 			{
 				return null;
 			}
 
-			return new Problem(
-				id: (ulong)parsedProblem["id"],
-				tests: tests,
-				checker: checker,
-				checkerCompilerId: (byte)parsedProblem["checker_compiler_id"],
-				lastUpdate: (DateTime)parsedProblem["updated_at"]
-			);
+			return problem;
 		}
 
 		public bool SendSubmissionLog(SubmissionLog log)
