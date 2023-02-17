@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace Worker
+namespace Worker.Helpers
 {
 	internal static class StringExtention
 	{

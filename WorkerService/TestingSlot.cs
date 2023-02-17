@@ -3,14 +3,17 @@ using System;
 using System.Linq;
 using System.Threading;
 using Worker.ClientApi;
+using Worker.ClientApi.Models;
+using Worker.Models;
+using Worker.Types;
 
 namespace Worker
 {
-	internal class Slot
+	internal class TestingSlot
 	{
 		private static Logger logger = LogManager.GetCurrentClassLogger();
 
-		public Slot(uint slotNumber)
+		public TestingSlot(uint slotNumber)
 		{
 			this.slotNumber = slotNumber;
 			client = new HttpCodelabsApiClient();

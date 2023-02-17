@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Worker.ClientApi.Models;
+using Worker.Models;
+using Worker.Types;
 
 namespace Worker.ClientApi
 {

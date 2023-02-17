@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Worker.Types;
 
 namespace Worker
 {
