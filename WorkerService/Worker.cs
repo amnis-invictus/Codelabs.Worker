@@ -60,7 +60,7 @@ namespace Worker
 				replacement.Add("$(SourceFilename)", sourceFilename);
 				replacement.Add("$(SourceFilenameWithOutExtention)", sourceFilename.Remove(sourceFilename.Length - 4, 4));
 			}
-			if (compilerLogFilename != null)
+			if (sourceFullPath != null)
 			{
 				replacement.Add("$(SourceFullPath)", sourceFullPath);
 			}
