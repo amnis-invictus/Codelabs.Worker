@@ -391,8 +391,16 @@ namespace Worker
 				}
 
 				logger.Info("Slot {0}: Preparion checker start enviroment", slotNum);
-				logger.Info("Slot {0}: Copy answer file.", slotNum);
-				Application.Get().FileProvider.Copy(problem.Tests[i].Answer, answerFileFullPath);
+				if (problem.Tests[i].Answer is null)
+				{
+                    logger.Info("Slot {0}: Answer file missing, creating empty file.", slotNum);
+                    using (File.Create(answerFileFullPath));
+                }
+				else
+				{
+                    logger.Info("Slot {0}: Copy answer file.", slotNum);
+                    Application.Get().FileProvider.Copy(problem.Tests[i].Answer, answerFileFullPath);
+                }
 
 				{
 					Tester tester = new Tester();
