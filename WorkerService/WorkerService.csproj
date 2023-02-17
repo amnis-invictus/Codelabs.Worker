@@ -104,25 +104,29 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application.cs" />
-    <Compile Include="BlockingQueue.cs" />
+    <Compile Include="ClientApi\Models\ApiType.cs" />
+    <Compile Include="ClientApi\Models\SubmissionLogType.cs" />
+    <Compile Include="ClientApi\Models\WorkerStatus.cs" />
+    <Compile Include="Helpers\StringConvertionExtension.cs" />
+    <Compile Include="Types\BlockingQueue.cs" />
     <Compile Include="ClientApi\HttpCodelabsApiClient.cs" />
     <Compile Include="ClientApi\IApiClient.cs" />
-    <Compile Include="ClientApi\Models\RequestMessage.cs" />
+    <Compile Include="ClientApi\RequestMessage.cs" />
     <Compile Include="ClientApi\Models\Submission.cs" />
     <Compile Include="ClientApi\Models\SubmissionLog.cs" />
     <Compile Include="ClientApi\Models\TestResult.cs" />
     <Compile Include="ClientApi\Models\WorkerInformation.cs" />
     <Compile Include="ClientApi\UpdateWorkerStatus.cs" />
-    <Compile Include="Command.cs" />
-    <Compile Include="Compiler.cs" />
+    <Compile Include="Types\Command.cs" />
+    <Compile Include="Types\Compiler.cs" />
     <Compile Include="CompilerManager.cs" />
     <Compile Include="Configuration.cs" />
-    <Compile Include="File.cs" />
+    <Compile Include="Types\ProblemFile.cs" />
     <Compile Include="FileProvider.cs" />
-    <Compile Include="StringExtention.cs" />
-    <Compile Include="LoggerExtention.cs" />
-    <Compile Include="ObjectExtensions.cs" />
-    <Compile Include="Problem.cs" />
+    <Compile Include="Helpers\StringExtention.cs" />
+    <Compile Include="Helpers\LoggerExtention.cs" />
+    <Compile Include="Helpers\ObjectExtensions.cs" />
+    <Compile Include="Models\Problem.cs" />
     <Compile Include="ProblemCache.cs" />
     <Compile Include="ServiceProcessInstaller.cs">
       <SubType>Component</SubType>
@@ -130,11 +134,11 @@
     <Compile Include="ServiceProcessInstaller.Designer.cs">
       <DependentUpon>ServiceProcessInstaller.cs</DependentUpon>
     </Compile>
-    <Compile Include="Slot.cs" />
-    <Compile Include="Test.cs" />
-    <Compile Include="TimeOutHelper.cs" />
+    <Compile Include="TestingSlot.cs" />
+    <Compile Include="Models\Test.cs" />
+    <Compile Include="Helpers\TimeOutHelper.cs" />
     <Compile Include="Worker.cs" />
-    <Compile Include="WorkerResult.cs" />
+    <Compile Include="ClientApi\Models\WorkerResult.cs" />
     <Compile Include="WorkerService.cs">
       <SubType>Component</SubType>
     </Compile>

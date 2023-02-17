@@ -8,7 +8,9 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using Worker.ClientApi.Models;
-using WorkerService;
+using Worker.Helpers;
+using Worker.Models;
+using Worker.Types;
 
 namespace Worker.ClientApi
 {

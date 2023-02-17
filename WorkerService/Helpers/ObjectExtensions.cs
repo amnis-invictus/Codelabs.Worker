@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Text;
 
-namespace Worker
+namespace Worker.Helpers
 {
 	internal static class ObjectExtensions
 	{

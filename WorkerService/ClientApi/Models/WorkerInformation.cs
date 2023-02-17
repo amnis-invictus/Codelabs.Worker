@@ -7,21 +7,7 @@ using Newtonsoft.Json;
 
 namespace Worker.ClientApi.Models
 {
-	internal enum ApiType : byte
-	{
-		HTTP = 0,
-		WS = 1,
-	}
-	internal enum WorkerStatus : byte
-	{
-		Disabled = 0,
-		Ok = 1,
-		Failed = 2,
-		Stale = 3,
-		Stopped = 4,
-	}
-
-	internal class WorkerInformation
+    internal class WorkerInformation
 	{
 		[JsonProperty(PropertyName = "name")]
 		public string Name;

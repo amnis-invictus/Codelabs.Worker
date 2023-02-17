@@ -1,4 +1,4 @@
-﻿namespace Worker
+﻿namespace Worker.ClientApi.Models
 {
     public enum WorkerResult : byte
     {
