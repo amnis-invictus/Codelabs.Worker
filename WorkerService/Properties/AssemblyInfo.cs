@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Codelabs.WorkerService")]
+[assembly: AssemblyTitle("WorkerService")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Codelabs")]
-[assembly: AssemblyProduct("WorkerService")]
-[assembly: AssemblyCopyright("Copyright © 2018")]
+[assembly: AssemblyCompany("Amnis Invictus")]
+[assembly: AssemblyProduct("Codelabs.WorkerService")]
+[assembly: AssemblyCopyright("Amnis Invictus © 2018-2023")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
