@@ -4,6 +4,11 @@
 	{
 		public string id;
 		public byte[] Content;
+
+		public void Save()
+		{
+			Application.Get().FileProvider.SaveFile(this);
+        }
 	}
 
 	/*class FileDb
