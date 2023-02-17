@@ -11,7 +11,7 @@ namespace Worker
 	internal class WorkerTaskManager
 	{
 		private Logger logger;
-		private Slot[] slots;
+		private TestingSlot[] slots;
 		private Task[] workerTasks;
 		private Task aliveStatusSenderTask;
 		private CancellationTokenSource sendingCancellationTokenSource;
@@ -28,7 +28,7 @@ namespace Worker
 
 		public bool Init(Configuration configuration)
 		{
-			slots = new Slot[configuration.WorkerSlotCount];
+			slots = new TestingSlot[configuration.WorkerSlotCount];
 			workerTasks = new Task[configuration.WorkerSlotCount + 1];
 
 			aliveStatusSenderCancellationTokenSource = new CancellationTokenSource();
@@ -164,7 +164,7 @@ namespace Worker
 
 		private void StartSlot(uint id)
 		{
-			slots[id - 1] = slots[id - 1] ?? new Slot(id);
+			slots[id - 1] = slots[id - 1] ?? new TestingSlot(id);
 			workerTasks[id] =
 				Task.Run(() => slots[id - 1].Do(slotsCancellationTokenSource.Token), slotsCancellationTokenSource.Token);
 		}

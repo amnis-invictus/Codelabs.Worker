@@ -6,6 +6,9 @@ using System.Text.RegularExpressions;
 using TesterLib;
 using Worker.ClientApi;
 using Worker.ClientApi.Models;
+using Worker.Helpers;
+using Worker.Models;
+using Worker.Types;
 
 namespace Worker
 {
@@ -56,7 +59,6 @@ namespace Worker
 			{
 				replacement.Add("$(SourceFilename)", sourceFilename);
 				replacement.Add("$(SourceFilenameWithOutExtention)", sourceFilename.Remove(sourceFilename.Length - 4, 4));
-				//SourceFilenameWithOutExtention
 			}
 			if (compilerLogFilename != null)
 			{

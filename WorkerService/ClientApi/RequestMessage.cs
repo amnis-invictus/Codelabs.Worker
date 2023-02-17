@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 
-namespace Worker.ClientApi.Models
+namespace Worker.ClientApi
 {
     public class RequestMessage
     {
