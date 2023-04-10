@@ -63,7 +63,7 @@ namespace Internal
 		if (useRestrictions)
 		{
 			applyMandatoryLevel(hProcessCreationToken);
-			applyMemoryLimit();
+			applyCPUMemoryLimit();
 			applyUIRestrictions();
 			//applyStartupAttribute(&startupInfoEx);
 		}
@@ -186,7 +186,7 @@ namespace Internal
 			break;
 		case WAIT_FAILED:
 			result = TesterLib::WaitingResult::Fail;
-			
+
 			if (!TerminateProcessS(startupHandles.process, -1))
 				Internal::logger->Error(L"Failed to TerminateProcess. workDirectory = '%s', program = '%s'", workDirectory, program);
 
