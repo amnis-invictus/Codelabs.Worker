@@ -172,7 +172,7 @@ namespace Internal
 			memoryLimitSet = false;
 		}
 
-		void SetProgram(const wchar_t * _program, const wchar_t * _args)
+		void SetProgram(const wchar_t* _program, const wchar_t* _args)
 		{
 			program = _wcsdup(_program);
 			args = _wcsdup(_args);
@@ -180,19 +180,19 @@ namespace Internal
 			programSet = true;
 		}
 
-		void SetUser(const wchar_t * _userName, const wchar_t * _domain, const wchar_t * _password)
+		void SetUser(const wchar_t* _userName, const wchar_t* _domain, const wchar_t* _password)
 		{
 			userInfo.userName = _wcsdup(_userName);
 			userInfo.domain = _wcsdup(_domain);
 			userInfo.password = _wcsdup(_password);
-		
+
 			userInfo.useLogon = true;
 		}
 
-		void SetWorkDirectory(const wchar_t * _dir)
+		void SetWorkDirectory(const wchar_t* _dir)
 		{
 			workDirectory = _wcsdup(_dir);
-		
+
 			workDirSet = true;
 		}
 
@@ -210,7 +210,7 @@ namespace Internal
 			memoryLimitSet = true;
 		}
 
-		bool RedirectIOHandleToFile(TesterLib::IOHandleType _handleType, const wchar_t * _fileName)
+		bool RedirectIOHandleToFile(TesterLib::IOHandleType _handleType, const wchar_t* _fileName)
 		{
 			if (_fileName == nullptr)
 			{
@@ -282,7 +282,7 @@ namespace Internal
 			return true;
 		}
 
-		bool RedirectIOHandleToHandle(TesterLib::IOHandleType _handleType, void * _handle, bool _duplicate)
+		bool RedirectIOHandleToHandle(TesterLib::IOHandleType _handleType, void* _handle, bool _duplicate)
 		{
 			if (_handle == nullptr)
 			{
@@ -333,7 +333,7 @@ namespace Internal
 			return true;
 		}
 
-		void * GetIORedirectedHandle(TesterLib::IOHandleType _handleType)
+		void* GetIORedirectedHandle(TesterLib::IOHandleType _handleType)
 		{
 			switch (_handleType)
 			{
@@ -368,17 +368,21 @@ namespace Internal
 		}
 
 	private:
-		bool applyMemoryLimit()
+		bool applyCPUMemoryLimit()
 		{
-			if (limits.memoryLimitKb <= 0)
-			{
-				Internal::logger->Warning(L"Can't set not positive memory limit. MemoryLimitKb = %lu\n",
-					limits.memoryLimitKb);
-
-				return false;
-			}
-
 			JOBOBJECT_EXTENDED_LIMIT_INFORMATION jobExtendedLimits = { 0 };
+
+			jobExtendedLimits.BasicLimitInformation.LimitFlags =
+				JOB_OBJECT_LIMIT_DIE_ON_UNHANDLED_EXCEPTION |
+				JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE |
+				JOB_OBJECT_LIMIT_PRIORITY_CLASS;
+
+			// Process that has priority above NORMAL_PRIORITY_CLASS but below HIGH_PRIORITY_CLASS. 
+			// Tester program should not interupts without real reason.
+			jobExtendedLimits.BasicLimitInformation.PriorityClass = ABOVE_NORMAL_PRIORITY_CLASS;
+
+			jobExtendedLimits.BasicLimitInformation.LimitFlags |= JOB_OBJECT_LIMIT_ACTIVE_PROCESS;
+			jobExtendedLimits.BasicLimitInformation.ActiveProcessLimit = 1;
 
 			if (!QueryInformationJobObject(startupHandles.job, JobObjectExtendedLimitInformation,
 				&jobExtendedLimits, sizeof(jobExtendedLimits), nullptr))
@@ -389,8 +393,16 @@ namespace Internal
 				return false;
 			}
 
-			jobExtendedLimits.BasicLimitInformation.LimitFlags |= JOB_OBJECT_LIMIT_PROCESS_MEMORY;
-			jobExtendedLimits.ProcessMemoryLimit = static_cast<SIZE_T>(1.5 * limits.memoryLimitKb * 1024); // 1.5X reserve;
+			if (limits.memoryLimitKb <= 0)
+			{
+				Internal::logger->Warning(L"Can't set not positive memory limit. MemoryLimitKb = %lu\n",
+					limits.memoryLimitKb);
+			}
+			else
+			{
+				jobExtendedLimits.BasicLimitInformation.LimitFlags |= JOB_OBJECT_LIMIT_PROCESS_MEMORY;
+				jobExtendedLimits.ProcessMemoryLimit = static_cast<SIZE_T>(1.5 * limits.memoryLimitKb * 1024); // 1.5X reserve;
+			}
 
 			if (!SetInformationJobObject(startupHandles.job, JobObjectExtendedLimitInformation,
 				&jobExtendedLimits, sizeof(JOBOBJECT_EXTENDED_LIMIT_INFORMATION)))
@@ -489,8 +501,7 @@ namespace Internal
 				JOB_OBJECT_UILIMIT_SYSTEMPARAMETERS |
 				JOB_OBJECT_UILIMIT_WRITECLIPBOARD |
 				JOB_OBJECT_UILIMIT_READCLIPBOARD |
-				JOB_OBJECT_UILIMIT_HANDLES |
-				JOB_OBJECT_UILIMIT_ALL;
+				JOB_OBJECT_UILIMIT_HANDLES;
 
 			jobUILimits.UIRestrictionsClass = restrictionsClass;
 			if (!SetInformationJobObject(startupHandles.job, JobObjectBasicUIRestrictions,
@@ -549,17 +560,17 @@ namespace Internal
 		bool realTimeLimitSet;
 		bool memoryLimitSet;
 		bool workDirSet;
-		wchar_t * program;
-		wchar_t * args;
-		wchar_t * workDirectory;
+		wchar_t* program;
+		wchar_t* args;
+		wchar_t* workDirectory;
 
 		DWORD startTime;
 		TesterLib::UsedResources usedResources;
 
 		struct {
-			wchar_t * userName;
-			wchar_t * domain;
-			wchar_t * password;
+			wchar_t* userName;
+			wchar_t* domain;
+			wchar_t* password;
 
 			bool useLogon;
 		} userInfo;
