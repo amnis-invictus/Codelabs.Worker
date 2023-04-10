@@ -118,7 +118,7 @@
     <Compile Include="ClientApi\Models\WorkerInformation.cs" />
     <Compile Include="ClientApi\UpdateWorkerStatus.cs" />
     <Compile Include="Types\Command.cs" />
-    <Compile Include="Types\Compiler.cs" />
+    <Compile Include="ClientApi\Models\CompilerConfig.cs" />
     <Compile Include="CompilerManager.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="Types\ProblemFile.cs" />

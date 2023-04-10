@@ -333,5 +333,43 @@ namespace Worker.ClientApi
 
 			return endpoint;
 		}
-	}
+
+        public IEnumerable<CompilerConfig> GetCompilers()
+        {
+            string endpoint = buildEndpoint("compilers");
+            string jsonCompilers = client.GetStringAsync(endpoint).Result;
+
+            logger.Debug("Download compilers response length: {0}", jsonCompilers.Length);
+            JArray parsedCompilers = JArray.Parse(jsonCompilers);
+
+            List<CompilerConfig> compilers = new  List<CompilerConfig>();
+			foreach (var compiler in parsedCompilers)
+			{
+				var id = (byte)compiler["id"];
+				var name = (string)compiler["name"];
+				var configString = (string)compiler["config"];
+				if (string.IsNullOrEmpty(configString))
+				{
+					logger.Warn("Compiler {0} from API has no XML config. Skipping...", name);
+					continue;
+                }
+				try
+				{
+					var config = CompilerConfig.FromString(configString);
+
+					config.Id = id;
+                    config.Name = name;
+
+                    compilers.Add(config);
+					logger.Info("Config for compiler {0} from API was loaded.", name);
+				}
+				catch (Exception ex)
+				{
+                    logger.Error(ex, "Failed to parse config for compiller {0} with exception.", name);
+                }
+            }
+
+            return compilers;
+        }
+    }
 }

@@ -16,6 +16,7 @@ namespace Worker.ClientApi
 		Problem DownloadProblem(ulong problemId);
 		ProblemFile DownloadSolution(Submission submission);
 		IEnumerable<Submission> GetSubmissions(bool retryOnFailed = true);
+		IEnumerable<CompilerConfig> GetCompilers();
 
 		RequestMessage GetTakeSubmissionsRequestMessage(ulong id);
 		RequestMessage GetFailSubmissionsRequestMessage(ulong id);
