@@ -52,7 +52,10 @@ namespace WorkerService
 									break;
 							Application.Get().Start();
 							break;
-						case "stop":
+                        case "status":
+                            Application.Get().Status();
+                            break;
+                        case "stop":
 							Application.Get().Stop();
 							break;
 						case "exit":
