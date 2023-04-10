@@ -26,7 +26,6 @@ namespace Worker
 			TestingWorkDirectory = config.Get("workarea") ?? ".\\workarea\\";
 
 			FileCacheFolder = config.Get("cache_folder") ?? ".\\cache\\";
-			CompilersConfigFolder = config.Get("compilers_config_folder") ?? ".\\compilers\\";
 			ProblemsCacheSize = config.Get("problems_cache_size").ToUInt32OrDefault(1);
 			ResultSendingCacheSize = config.Get("result_sending_cache_size").ToUInt32OrDefault(2048);
 
@@ -66,7 +65,6 @@ namespace Worker
 		public string WorkerName { get; }
 		public string TestingWorkDirectory { get; }
 		public string FileCacheFolder { get; }
-		public string CompilersConfigFolder { get; }
 		public uint ProblemsCacheSize { get; }
 		public uint ResultSendingCacheSize { get; }
 		public Uri BaseAddress { get; }

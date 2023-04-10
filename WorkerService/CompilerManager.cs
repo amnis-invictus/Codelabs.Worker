@@ -1,75 +1,64 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
 using NLog;
+using Worker.ClientApi;
 
 namespace Worker
 {
-	internal class CompilerManager
-	{
-		static Logger logger = LogManager.GetCurrentClassLogger();
+    internal class CompilerManager
+    {
+        static Logger logger = LogManager.GetCurrentClassLogger();
 
-		private HashSet<byte> compilersIds = null;
-		private Dictionary<byte, Compiler> compilers = new Dictionary<byte, Compiler>();
-		private string directory;
+        private HashSet<byte> compilersIds = null;
+        private Dictionary<byte, CompilerConfig> compilers = new Dictionary<byte, CompilerConfig>();
+        private HttpCodelabsApiClient apiClient;
 
-		public CompilerManager(string _dir)
-		{
-			logger.Debug("ctor");
+        public CompilerManager()
+        {
+            logger.Debug("ctor");
+            apiClient = new HttpCodelabsApiClient();
+        }
+        public bool Init()
+        {
+            logger.Info("Initialization started.");
+            IEnumerable<CompilerConfig> serverCompilers = apiClient.GetCompilers();
+            if (!serverCompilers.Any())
+            {
+                logger.Error("Initialization failed, server does not provide any valid config.");
+                return false;
+            }
 
-			directory = _dir;
-		}
-		public bool Init()
-		{
-			logger.Info("Initialization started. Compiler directory {0}.", directory);
-			if (!Directory.Exists(directory))
-			{
-				logger.Error("Initialization failed. Directory does not exist.", directory);
+            serverCompilers = serverCompilers.Where(compilerInstalled);
+            if (!serverCompilers.Any())
+            {
+                logger.Error("Initialization failed, server does not have installed compilers.");
+                return false;
+            }
 
-				return false;
-			}
+            foreach (var compiler in serverCompilers)
+            {
+                compiler.Commands?.Sort((x, y) => x.Order - y.Order);
+                compiler.InstallCompilerCommands?.Sort((x, y) => x.Order - y.Order);
+                compilers.Add(compiler.Id, compiler);
+            }
 
-			var files = Directory.GetFiles(directory);
-			foreach (var file in files)
-			{
-				var info = new FileInfo(file);
-				if (info.Extension != ".cfg")
-				{
-					logger.Warn("Incorect compiler configuration file extension. File {0} was skipped", info.Name);
-					continue;
-				}
-				else
-					logger.Debug("Try to load configuration from file {0}", info.Name);
+            logger.Info("Compiler's configuration initialized successfully.");
+            return true;
+        }
 
-				try
-				{
-					Compiler compiler;
-					XmlSerializer serializer = new XmlSerializer(typeof(Compiler));
-					using (FileStream fs = info.OpenRead())
-					using (XmlReader reader = XmlReader.Create(fs))
-						compiler = (Compiler)serializer.Deserialize(reader);
+        public bool HasCompiler(byte id) =>
+            compilers.ContainsKey(id);
+        public bool CheckCompiler(byte id, string name) =>
+            HasCompiler(id) && compilers[id].Name == name;
+        public CompilerConfig GetCompiler(byte id) => compilers[id];
+        public HashSet<byte> GetCompilers() =>
+            compilersIds ?? (compilersIds = new HashSet<byte>(compilers.Keys));
 
-					compiler.Commands.Sort((x, y) => x.Order - y.Order);
-					compilers.Add(compiler.Id, compiler);
-				}
-				catch (Exception ex)
-				{
-					logger.Warn(ex, "Load configuration failed");
-				}
-			}
-
-			logger.Info("Compiler's configuration initialized successfully", directory);
-			return true;
-		}
-
-		public bool HasCompiler(byte id) => 
-			compilers.ContainsKey(id);
-		public bool CheckCompiler(byte id, string name) => 
-			HasCompiler(id) && compilers[id].Name == name;
-		public Compiler GetCompiler(byte id) => compilers[id];
-		public HashSet<byte> GetCompilers() => 
-			compilersIds ?? (compilersIds = new HashSet<byte>(compilers.Keys));
-	}
+        private bool compilerInstalled(CompilerConfig config) =>
+            !string.IsNullOrEmpty(config.CheckCompilerFile) && File.Exists(config.CheckCompilerFile);
+    }
 }

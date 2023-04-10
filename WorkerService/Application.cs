@@ -42,7 +42,7 @@ namespace Worker
             Configuration = new Configuration(config);
 
             FileProvider = new FileProvider(Configuration.FileCacheFolder);
-            Compilers = new CompilerManager(Configuration.CompilersConfigFolder);
+            Compilers = new CompilerManager();
 
             Problems = new ProblemCache(Configuration.ProblemsCacheSize);
             RequestMessages = new BlockingQueue<RequestMessage>(Configuration.ResultSendingCacheSize);

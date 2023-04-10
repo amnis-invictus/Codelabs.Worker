@@ -118,7 +118,7 @@ namespace Worker
 			return replacement;
 		}
 
-		private bool compile(string workdir, Compiler compiler,
+		private bool compile(string workdir, CompilerConfig compiler,
 			Dictionary<string, string> replacement, string compilerLogFullPath,
 			bool isChecker = false)
 		{
@@ -143,7 +143,7 @@ namespace Worker
 
 				if (tester.Run(false))
 				{
-					logger.Info("Slot {0}: Compiler run successfully", slotNum);
+					logger.Info("Slot {0}: CompilerConfig run successfully", slotNum);
 				}
 				else
 				{
@@ -168,11 +168,11 @@ namespace Worker
 				uint exitCode = tester.GetExitCode();
 				if (exitCode == 0)
 				{
-					logger.Info("Slot {0}: Compiler exited successfully", slotNum);
+					logger.Info("Slot {0}: CompilerConfig exited successfully", slotNum);
 				}
 				else
 				{
-					logger.Error("Slot {0}: Compiler exit with code {0}", slotNum, exitCode);
+					logger.Error("Slot {0}: CompilerConfig exit with code {0}", slotNum, exitCode);
 
 					tester.Destroy();
 					return false;
@@ -185,7 +185,7 @@ namespace Worker
 			return true;
 		}
 
-		private bool compileChecker(string workdir, ProblemFile checker, Compiler compiler)
+		private bool compileChecker(string workdir, ProblemFile checker, CompilerConfig compiler)
 		{
 			string sourceFilename = $"checker{compiler.FileExt}";
 			string sourceFullPath = Path.Combine(workdir, sourceFilename);
@@ -206,7 +206,7 @@ namespace Worker
 			return compile(workdir, compiler, replacement, compilerLogFullPath, true);
 		}
 
-		private bool compileSolution(string workdir, ProblemFile solution, Compiler compiler)
+		private bool compileSolution(string workdir, ProblemFile solution, CompilerConfig compiler)
 		{
 			string sourceFilename = $"solution{compiler.FileExt}";
 			string sourceFullPath = Path.Combine(workdir, sourceFilename);
@@ -233,8 +233,8 @@ namespace Worker
 			Directory.CreateDirectory(workdir);
 			logger.Info("Slot {0} starting testing submission {1} at {2}", slotNum, submission.Id, workdir);
 
-			Compiler checkerCompiler = Application.Get().Compilers.GetCompiler(problem.CheckerCompilerId);
-			Compiler solutionCompiler = Application.Get().Compilers.GetCompiler(submission.CompilerId);
+			CompilerConfig checkerCompiler = Application.Get().Compilers.GetCompiler(problem.CheckerCompilerId);
+			CompilerConfig solutionCompiler = Application.Get().Compilers.GetCompiler(submission.CompilerId);
 
 			string inputFileFullPath = Path.Combine(workdir, Application.Get().Configuration.InputFileName);
 			string outputFileFullPath = Path.Combine(workdir, Application.Get().Configuration.OutputFileName);
