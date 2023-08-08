@@ -50,7 +50,7 @@
 				<File Id="tester_lib_dll" Source="$(var.WorkerServiceBinDir)\TesterLib.dll" KeyPath="yes"/>
 			</Component>
 			<Component Id="worker_service_cfg" Guid="35bfcfaf-9f54-4f9c-834c-c3fbbda5abce">
-				<File Id="worker_service_cfg" Source="$(var.WorkerServiceBinDir)\WorkerService.exe.config" KeyPath="yes"/>
+				<File Id="worker_service_cfg" Name="WorkerService.exe.config.example" Source="$(var.WorkerServiceBinDir)\WorkerService.exe.config" KeyPath="yes"/>
 			</Component>
 			<Component Id="nlog_dll" Guid="bfe392fd-d932-4e00-91bc-44ceea3a4e87">
 				<File Id="nlog_dll" Source="$(var.WorkerServiceBinDir)\NLog.dll" KeyPath="yes"/>
