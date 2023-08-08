@@ -1,12 +1,19 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32228.343
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33403.182
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TesterLib", "TesterLib\TesterLib.vcxproj", "{75A0152A-D5BD-4EF3-97E5-43AC125D866D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkerUpdater", "WorkerUpdater\WorkerUpdater.csproj", "{80A1A18B-5CC4-4490-A93D-DB66343EDDB8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkerService", "WorkerService\WorkerService.csproj", "{D58DDEAB-B2DE-408D-A85C-59EF26C84E50}"
+EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "WorkerSetup", "WorkerSetup\WorkerSetup.wixproj", "{1DD824E6-DAD7-4830-A0E7-729EAF5472D3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D58DDEAB-B2DE-408D-A85C-59EF26C84E50} = {D58DDEAB-B2DE-408D-A85C-59EF26C84E50}
+	EndProjectSection
+EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "MinGWInstaller", "MinGWInstaller\MinGWInstaller.wixproj", "{34621C68-6304-4BB8-BBF3-8FFEDED50382}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,6 +61,30 @@ Global
 		{D58DDEAB-B2DE-408D-A85C-59EF26C84E50}.Release|x64.Build.0 = Release|x64
 		{D58DDEAB-B2DE-408D-A85C-59EF26C84E50}.Release|x86.ActiveCfg = Release|x86
 		{D58DDEAB-B2DE-408D-A85C-59EF26C84E50}.Release|x86.Build.0 = Release|x86
+		{1DD824E6-DAD7-4830-A0E7-729EAF5472D3}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{1DD824E6-DAD7-4830-A0E7-729EAF5472D3}.Debug|Any CPU.Build.0 = Debug|x86
+		{1DD824E6-DAD7-4830-A0E7-729EAF5472D3}.Debug|x64.ActiveCfg = Debug|x86
+		{1DD824E6-DAD7-4830-A0E7-729EAF5472D3}.Debug|x64.Build.0 = Debug|x86
+		{1DD824E6-DAD7-4830-A0E7-729EAF5472D3}.Debug|x86.ActiveCfg = Debug|x86
+		{1DD824E6-DAD7-4830-A0E7-729EAF5472D3}.Debug|x86.Build.0 = Debug|x86
+		{1DD824E6-DAD7-4830-A0E7-729EAF5472D3}.Release|Any CPU.ActiveCfg = Release|x86
+		{1DD824E6-DAD7-4830-A0E7-729EAF5472D3}.Release|Any CPU.Build.0 = Release|x86
+		{1DD824E6-DAD7-4830-A0E7-729EAF5472D3}.Release|x64.ActiveCfg = Release|x64
+		{1DD824E6-DAD7-4830-A0E7-729EAF5472D3}.Release|x64.Build.0 = Release|x64
+		{1DD824E6-DAD7-4830-A0E7-729EAF5472D3}.Release|x86.ActiveCfg = Release|x86
+		{1DD824E6-DAD7-4830-A0E7-729EAF5472D3}.Release|x86.Build.0 = Release|x86
+		{34621C68-6304-4BB8-BBF3-8FFEDED50382}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{34621C68-6304-4BB8-BBF3-8FFEDED50382}.Debug|Any CPU.Build.0 = Debug|x86
+		{34621C68-6304-4BB8-BBF3-8FFEDED50382}.Debug|x64.ActiveCfg = Debug|x86
+		{34621C68-6304-4BB8-BBF3-8FFEDED50382}.Debug|x64.Build.0 = Debug|x86
+		{34621C68-6304-4BB8-BBF3-8FFEDED50382}.Debug|x86.ActiveCfg = Debug|x86
+		{34621C68-6304-4BB8-BBF3-8FFEDED50382}.Debug|x86.Build.0 = Debug|x86
+		{34621C68-6304-4BB8-BBF3-8FFEDED50382}.Release|Any CPU.ActiveCfg = Release|x86
+		{34621C68-6304-4BB8-BBF3-8FFEDED50382}.Release|Any CPU.Build.0 = Release|x86
+		{34621C68-6304-4BB8-BBF3-8FFEDED50382}.Release|x64.ActiveCfg = Release|x64
+		{34621C68-6304-4BB8-BBF3-8FFEDED50382}.Release|x64.Build.0 = Release|x64
+		{34621C68-6304-4BB8-BBF3-8FFEDED50382}.Release|x86.ActiveCfg = Release|x86
+		{34621C68-6304-4BB8-BBF3-8FFEDED50382}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
