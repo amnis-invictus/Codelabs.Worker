@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" InitialTargets="EnsureWixToolsetInstalled" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>3.10</ProductVersion>
+    <ProjectGuid>34621c68-6304-4bb8-bbf3-8ffeded50382</ProjectGuid>
+    <SchemaVersion>2.0</SchemaVersion>
+    <OutputName>MinGWInstaller</OutputName>
+    <OutputType>Package</OutputType>
+    <MinGWVersion>12.2.0</MinGWVersion>
+    <_MinGWBase>https://github.com/niXman/mingw-builds-binaries/releases/download/$(MinGWVersion)-rt_v10-rev2</_MinGWBase>
+    <_TestLibBase>https://raw.githubusercontent.com/MikeMirzayanov/testlib/a76c6f05e189b168fc51edf7210dfa69bfe7c285</_TestLibBase>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+    <DefineConstants>Debug;SourceDir=bin\$(Platform)\$(Configuration)\mingw64;MinGWVersion=$(MinGWVersion)</DefineConstants>
+    <VerboseOutput>True</VerboseOutput>
+    <WixVariables>
+    </WixVariables>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+    <VerboseOutput>True</VerboseOutput>
+    <WixVariables>
+    </WixVariables>
+    <DefineConstants>SourceDir=bin\$(Platform)\$(Configuration)\mingw64;MinGWVersion=$(MinGWVersion)</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <DefineConstants>Debug;SourceDir=bin\$(Platform)\$(Configuration)\mingw64;MinGWVersion=$(MinGWVersion)</DefineConstants>
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+    <VerboseOutput>True</VerboseOutput>
+    <WixVariables>
+    </WixVariables>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+    <VerboseOutput>True</VerboseOutput>
+    <WixVariables>
+    </WixVariables>
+    <DefineConstants>SourceDir=bin\$(Platform)\$(Configuration)\mingw64;MinGWVersion=$(MinGWVersion)</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="mingw.wxs" />
+    <Compile Include="Product.wxs" />
+  </ItemGroup>
+  <Import Project="$(WixTargetsPath)" Condition=" '$(WixTargetsPath)' != '' " />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets" Condition=" '$(WixTargetsPath)' == '' AND Exists('$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets') " />
+  <Target Name="EnsureWixToolsetInstalled" Condition=" '$(WixTargetsImported)' != 'true' ">
+    <Error Text="The WiX Toolset v3.11 build tools must be installed to build this project. To download the WiX Toolset, see https://wixtoolset.org/releases/v3.11/stable" />
+  </Target>
+  <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
+    <_MinGWFile>i686-$(MinGWVersion)-release-win32-dwarf-msvcrt-rt_v10-rev2.7z</_MinGWFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'x64' ">
+    <_MinGWFile>x86_64-$(MinGWVersion)-release-win32-seh-msvcrt-rt_v10-rev2.7z</_MinGWFile>
+  </PropertyGroup>
+  <!-- 
+    We need RunAsSeparateProcess due to bug
+    Setup using HeatDirectory task kills Visual Studio 2022 
+    https://github.com/wixtoolset/issues/issues/6636
+  -->
+  <Target Name="BeforeBuild">
+    <Exec Command="curl -L $(_MinGWBase)/$(_MinGWFile) -o $(TargetDir)\$(_MinGWFile)" />
+    <Exec Command="7z x -y -o$(TargetDir) $(TargetDir)\$(_MinGWFile)" />
+    <Exec Command="curl -L $(_TestLibBase)/testlib.h -o $(TargetDir)\mingw64\x86_64-w64-mingw32\include\testlib.h" />
+    <HeatDirectory Directory="$(TargetDir)\mingw64" OutputFile="mingw.wxs" DirectoryRefId="MinGWInstallDir" ComponentGroupName="MinGWFiles" SuppressCom="true" SuppressFragments="true" SuppressRootDirectory="true" SuppressRegistry="true" AutoGenerateGuids="false" GenerateGuidsNow="true" PreprocessorVariable="var.SourceDir" ToolPath="$(WixToolPath)" RunAsSeparateProcess="$(RunWixToolsOutOfProc)" />
+  </Target>
+</Project>
