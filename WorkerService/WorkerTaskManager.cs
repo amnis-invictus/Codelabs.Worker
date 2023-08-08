@@ -58,13 +58,15 @@ namespace Worker
 
 		private string[] GetStatus()
 		{
-			string[] res = new string[Application.Get().Configuration.WorkerSlotCount + 1];
+			string[] res = new string[Application.Get().Configuration.WorkerSlotCount + 2];
 
 			res[0] = $"SendingTestingResult: {workerTasks[0]?.Status.ToString()}";
 			for (uint i = 1; i <= Application.Get().Configuration.WorkerSlotCount; i++)
 				res[i] = $"Slot {i}: {workerTasks[i]?.Status.ToString()}";
 
-			return res;
+			res[Application.Get().Configuration.WorkerSlotCount + 1] = "Compilers: " + Application.Get().Compilers.GetStatus();
+
+            return res;
 		}
 
 		public void Start()

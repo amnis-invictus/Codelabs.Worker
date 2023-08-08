@@ -17,6 +17,8 @@ namespace Worker
         private Dictionary<byte, CompilerConfig> compilers = new Dictionary<byte, CompilerConfig>();
         private HttpCodelabsApiClient apiClient;
 
+        private IEnumerable<CompilerConfig> ignoredCompilers;
+
         public CompilerManager()
         {
             logger.Debug("ctor");
@@ -32,14 +34,15 @@ namespace Worker
                 return false;
             }
 
-            serverCompilers = serverCompilers.Where(compilerInstalled);
-            if (!serverCompilers.Any())
+            var installedCompilers = serverCompilers.Where(compilerInstalled);
+            ignoredCompilers = serverCompilers.Except(installedCompilers);
+            if (!installedCompilers.Any())
             {
                 logger.Error("Initialization failed, server does not have installed compilers.");
                 return false;
             }
 
-            foreach (var compiler in serverCompilers)
+            foreach (var compiler in installedCompilers)
             {
                 compiler.Commands?.Sort((x, y) => x.Order - y.Order);
                 compiler.InstallCompilerCommands?.Sort((x, y) => x.Order - y.Order);
@@ -57,6 +60,12 @@ namespace Worker
         public CompilerConfig GetCompiler(byte id) => compilers[id];
         public HashSet<byte> GetCompilers() =>
             compilersIds ?? (compilersIds = new HashSet<byte>(compilers.Keys));
+
+        public string GetStatus()
+        {
+            return "Active: " + string.Join(",", compilers.Keys) +
+                "\nIngored: " + string.Join(",", ignoredCompilers.Select(c => c.Id));
+        }
 
         private bool compilerInstalled(CompilerConfig config) =>
             !string.IsNullOrEmpty(config.CheckCompilerFile) && File.Exists(config.CheckCompilerFile);
