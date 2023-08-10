@@ -16,7 +16,7 @@ namespace Worker.Models
 
         [JsonProperty(PropertyName = "input_url")]
 		public string InputUrl;
-        [JsonProperty(PropertyName = "answer_arl")]
+        [JsonProperty(PropertyName = "answer_url")]
 		public string AnswerUrl;
     }
 }
