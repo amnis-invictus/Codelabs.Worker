@@ -55,7 +55,7 @@ namespace Worker
 						{"$(WorkDirecrory)", workDirecrory },
 					};
 
-			if (compilerLogFullPath != null)
+			if (sourceFilename != null)
 			{
 				replacement.Add("$(SourceFilename)", sourceFilename);
 				replacement.Add("$(SourceFilenameWithOutExtention)", sourceFilename.Remove(sourceFilename.Length - 4, 4));
