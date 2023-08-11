@@ -64,13 +64,18 @@ namespace Worker
 					}
 				);
 
-				Worker worker = new Worker(slotNumber, client);
+				if (problem is null)
+				{
+                    logger.Error("Failed to fetch problem with id {0}", submission.ProblemId);
+                    result = WorkerResult.TestingError;
+                }
 
 				if (result != WorkerResult.TestingError)
 				{
 					try
 					{
-						result = worker.Testing(submission, problem, solution);
+                        Worker worker = new Worker(slotNumber, client);
+                        result = worker.Testing(submission, problem, solution);
 					}
 					catch (Exception ex)
 					{

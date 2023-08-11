@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using Worker.Models;
 
@@ -6,7 +7,9 @@ namespace Worker
 {
 	internal class ProblemCache
 	{
-		private readonly uint MaxSize;
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
+        private readonly uint MaxSize;
 		private LinkedList<ulong> cachedProblems = new LinkedList<ulong>();
 		private Dictionary<ulong, Problem> problems = new Dictionary<ulong, Problem>();
 		private Dictionary<ulong, LinkedListNode<ulong>> problemsNode = new Dictionary<ulong, LinkedListNode<ulong>>();
@@ -29,18 +32,28 @@ namespace Worker
 			{
 				lock (sync)
 				{
-					contains = problems.TryGetValue(id, out problem);
+					try
+					{
+                        contains = problems.TryGetValue(id, out problem);
 
-					if (contains && problem.LastUpdate == updatedAt)
+                        if (contains && problem.LastUpdate == updatedAt)
+                        {
+                            return getProblem(id);
+                        }
+                        else
+                        {
+                            problem = func();
+                            addOrUpdateProblem(problem, contains);
+                            return getProblem(problem.Id);
+                        }
+                    }
+					catch (Exception ex)
 					{
-						return getProblem(id);
+                        logger.Error("Fetch problem {0} failed with exception {1}. Error {2}", id, ex.GetType().Name, ex);
+
+						return null;
 					}
-					else
-					{
-						problem = func();
-						addOrUpdateProblem(problem, contains);
-						return getProblem(problem.Id);
-					}
+					
 				}
 			}
 		}
@@ -107,7 +120,6 @@ namespace Worker
 
 			cachedProblems.Remove(node);
 			cachedProblems.AddFirst(node);
-
 
 			return problem;
 		}
