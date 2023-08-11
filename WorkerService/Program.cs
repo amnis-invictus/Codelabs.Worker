@@ -58,10 +58,13 @@ namespace WorkerService
                         case "stop":
 							Application.Get().Stop();
 							break;
-						case "exit":
+                        case "info":
+                            logger.Info("Version: {0}", Application.GetVersion());
+                            break;
+                        case "exit":
 							Application.Get().Stop();
 							return;
-						default:
+                        default:
 							logger.Info("Command '{0}' is unknown", command);
 							break;
 					}
