@@ -52,7 +52,8 @@ namespace Worker
 			foreach (var test in problem.Tests)
 			{
 				RemoveFile(test.Input);
-				RemoveFile(test.Answer);
+				if (test.Answer != null)
+					RemoveFile(test.Answer);
 			}
 		}
 
