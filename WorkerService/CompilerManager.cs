@@ -61,10 +61,13 @@ namespace Worker
         public HashSet<byte> GetCompilers() =>
             compilersIds ?? (compilersIds = new HashSet<byte>(compilers.Keys));
 
+        public IEnumerable<byte> GetActiveCompilers() => compilers.Keys;
+        public IEnumerable<byte> GetIgnoredCompilers() => ignoredCompilers.Select(c => c.Id);
+
         public string GetStatus()
         {
-            return "Active: " + string.Join(",", compilers.Keys) +
-                "\nIngored: " + string.Join(",", ignoredCompilers.Select(c => c.Id));
+            return "Compilers:\n  Active: " + string.Join(",", compilers.Keys) +
+                "\n  Ingored: " + string.Join(",", ignoredCompilers.Select(c => c.Id));
         }
 
         private bool compilerInstalled(CompilerConfig config) =>

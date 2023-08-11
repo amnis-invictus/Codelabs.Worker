@@ -15,7 +15,11 @@ namespace Worker.ClientApi.Models
 		public string[] IPs;
 		[JsonProperty(PropertyName = "version")]
 		public string Version;
-		[JsonProperty(PropertyName = "api_version")]
+        [JsonProperty(PropertyName = "active_compilers")]
+        public uint[] ActiveCompilers;
+        [JsonProperty(PropertyName = "ignored_compilers")]
+        public uint[] IgnoredCompilers;
+        [JsonProperty(PropertyName = "api_version")]
 		public uint? ApiVersion;
 		[JsonProperty(PropertyName = "api_type")]
 		public ApiType? ApiType;
@@ -24,7 +28,7 @@ namespace Worker.ClientApi.Models
 
 		[JsonProperty(PropertyName = "status")]
 		public WorkerStatus? Status;
-		[JsonProperty(PropertyName = "task_status")]
+        [JsonProperty(PropertyName = "task_status")]
 		public string[] TaskStatuses;
 
 		[JsonProperty(PropertyName = "alive_at")]
@@ -41,6 +45,9 @@ namespace Worker.ClientApi.Models
 			Name = name ?? throw new ArgumentNullException(nameof(name));
 			IPs = ps ?? throw new ArgumentNullException(nameof(ps));
 			Version = Application.GetVersion().ToString();
+
+			ActiveCompilers = Application.Get().Compilers.GetActiveCompilers().Select(id => (uint)id).ToArray();
+			IgnoredCompilers = Application.Get().Compilers.GetIgnoredCompilers().Select(id => (uint)id).ToArray();
 
 			Status = WorkerStatus.Disabled;
 		}
