@@ -103,7 +103,7 @@ namespace Worker
             return true;
         }
 
-        public Version GetVersion()
+        public static Version GetVersion()
         {
             var assembly = Assembly.GetExecutingAssembly();
             var fvi = FileVersionInfo.GetVersionInfo(assembly.Location);

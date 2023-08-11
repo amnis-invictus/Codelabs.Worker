@@ -13,6 +13,8 @@ namespace Worker.ClientApi.Models
 		public string Name;
 		[JsonProperty(PropertyName = "ips")]
 		public string[] IPs;
+		[JsonProperty(PropertyName = "version")]
+		public string Version;
 		[JsonProperty(PropertyName = "api_version")]
 		public uint? ApiVersion;
 		[JsonProperty(PropertyName = "api_type")]
@@ -38,6 +40,7 @@ namespace Worker.ClientApi.Models
 		{
 			Name = name ?? throw new ArgumentNullException(nameof(name));
 			IPs = ps ?? throw new ArgumentNullException(nameof(ps));
+			Version = Application.GetVersion().ToString();
 
 			Status = WorkerStatus.Disabled;
 		}
