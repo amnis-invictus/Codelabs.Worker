@@ -304,7 +304,7 @@ namespace Worker.ClientApi
 			}
 		}
 
-		public uint GetVersion() => 2;
+		public uint GetVersion() => 1;
 		public ApiType GetApiType() => ApiType.HTTP;
 		public bool GetWebhookSupported() => false;
 
