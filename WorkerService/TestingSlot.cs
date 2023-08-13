@@ -35,7 +35,7 @@ namespace Worker
 				}
 
 				var submission = submissions.First();
-				if (!client.SendRequest(client.GetTakeSubmissionsRequestMessage(submission.Id)))
+				if (!client.SendRequest(client.GetTakeSubmissionsRequestMessage(submission.Id), false))
 				{
 					continue;
 				}
